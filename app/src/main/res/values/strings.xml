@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OOP Calculator</string>
+    <string name="currentOOPlbl">Current OOP</string>
+    <string name="maxOOPLabel">Maximum OOP</string>
+    <string name="coinslbl">Coinsurance % (decimal)</string>
+    <string name="allowlbl">Allowable</string>
+    <string name="calc">Calculate</string>
+    <string name="noOOP">OOP has not been reached.</string>
+    <string name="deductibleWarning">Not the best with deductibles and copays right now</string>
+    <string name="version">Version 0.05</string>
+</resources>
