@@ -27,7 +27,8 @@
         android:id="@+id/currentOOP"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/maxOOP"
-        android:layout_alignStart="@+id/maxOOP" />
+        android:layout_alignStart="@+id/maxOOP"
+        android:text="50"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +48,8 @@
         android:id="@+id/maxOOP"
         android:layout_below="@+id/currentOOP"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="100"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,7 +69,8 @@
         android:id="@+id/coins"
         android:layout_below="@+id/maxOOP"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text=".5"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -87,16 +90,37 @@
         android:id="@+id/allow"
         android:layout_below="@+id/coinsLabel"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="100"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/copayDeduc"
+        android:layout_alignBottom="@+id/copayDeduc"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/copayDeducLabel"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:ems="6"
+        android:id="@id/copayDeduc"
+        android:layout_below="@id/allow"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="0"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/splitOne"
-        android:layout_below="@+id/allowLabel"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="91dp" />
+        android:layout_below="@+id/copayDeduc"
+        android:layout_alignParentRight="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -113,19 +137,10 @@
         android:text="@string/calc"
         android:id="@+id/calcButton"
         android:onClick="onCalculate"
-        android:layout_below="@+id/allowLabel"
+        android:layout_below="@+id/copayDeducLabel"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textAlignment="center"
-        android:text="@string/deductibleWarning"
-        android:id="@+id/deductibleWarning"
-        android:layout_above="@+id/version"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -135,6 +150,13 @@
         android:id="@+id/version"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/version"
+        android:text="@string/versionNote"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

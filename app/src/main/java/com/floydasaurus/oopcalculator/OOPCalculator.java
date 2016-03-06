@@ -29,6 +29,7 @@ public class OOPCalculator extends AppCompatActivity {
         EditText maxOOPView = (EditText) findViewById(R.id.maxOOP);
         EditText coinsView = (EditText) findViewById(R.id.coins);
         EditText allowView = (EditText) findViewById(R.id.allow);
+        EditText copayDeducView = (EditText) findViewById(R.id.copayDeduc);
 
         // Pull TextViews for display purposes
         TextView splitOneView = (TextView) findViewById(R.id.splitOne);
@@ -37,23 +38,52 @@ public class OOPCalculator extends AppCompatActivity {
         // Turn into numbers
         BigDecimal currentOOP = new BigDecimal(Double.parseDouble(currentOOPView.getText().toString()));
         BigDecimal maxOOP = new BigDecimal(Double.parseDouble(maxOOPView.getText().toString()));
-        BigDecimal coins = new BigDecimal(Double.parseDouble(coinsView.getText().toString())).setScale(2,BigDecimal.ROUND_HALF_UP);
-        BigDecimal memberCoins = new BigDecimal(1.0).subtract(coins).setScale(2,BigDecimal.ROUND_HALF_UP);
+        BigDecimal coins = new BigDecimal(Double.parseDouble(coinsView.getText().toString())).setScale(2, BigDecimal.ROUND_HALF_UP);
+        BigDecimal memberCoins = new BigDecimal(1.0).subtract(coins).setScale(2, BigDecimal.ROUND_HALF_UP);
         BigDecimal allow = new BigDecimal(Double.parseDouble(allowView.getText().toString()));
+        BigDecimal copayDeduc = new BigDecimal(Double.parseDouble(copayDeducView.getText().toString()));
+
         // More Accurate Math-er?
-        BigDecimal newCoinsSplit = maxOOP.subtract(currentOOP).setScale(2,BigDecimal.ROUND_HALF_UP);
-        newCoinsSplit = newCoinsSplit.divide(memberCoins,BigDecimal.ROUND_HALF_UP);
+        BigDecimal amtToOOP = maxOOP.subtract(currentOOP).setScale(2,BigDecimal.ROUND_HALF_UP);
+        String resultOne;
+        String resultTwo;
 
-        if (newCoinsSplit.compareTo(allow) == 0 || newCoinsSplit.compareTo(allow) == 1) {
-            splitOneView.setText(getString(R.string.noOOP));
-            splitTwoView.setText("");
+        // Check to see if the copay/deductible by themselves will hit the OOP maximum perfectly
+        if (amtToOOP.subtract(copayDeduc).setScale(2,BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal("0")) == 0){
+            resultOne = "First Line: " + copayDeduc.toString();
+            resultTwo = "Second Line: " + allow.subtract(copayDeduc).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        // Checks to see if part of the copay/deductible will hit OOP Maximum
+        } else if(amtToOOP.subtract(copayDeduc).setScale(2,BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal("0")) < 0){
+            resultOne = "First Line: " + amtToOOP.toString();
+            resultTwo = "Second Line: " + allow.subtract(amtToOOP).setScale(2,BigDecimal.ROUND_HALF_UP);
+
+        // Does the new coins split math...
         } else {
-            String resultOne = newCoinsSplit.toString();
-            String resultTwo = allow.subtract(newCoinsSplit).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            BigDecimal newCoinsSplit = amtToOOP.subtract(copayDeduc).setScale(2,BigDecimal.ROUND_HALF_UP);
+            newCoinsSplit = newCoinsSplit.divide(memberCoins, BigDecimal.ROUND_HALF_UP);
+            newCoinsSplit = newCoinsSplit.add(copayDeduc).setScale(2,BigDecimal.ROUND_HALF_UP);
 
-            // Set the text in the view
-            splitOneView.setText(resultOne);
-            splitTwoView.setText(resultTwo);
+            // Checks to see if it doesn't even hit the OOP Maximum here
+            if (newCoinsSplit.compareTo(allow) == 1) {
+                resultOne = getString(R.string.noOOP);
+                resultTwo = "";
+
+            // Checks to see if the OOP is met *perfectly* and therefore requires no split
+            } else if (newCoinsSplit.compareTo(allow) == 0) {
+                resultOne = getString(R.string.oopMetPerfectly);
+                resultTwo = "";
+
+            // If neither of those two things are true, it will then display the split
+            } else {
+                resultOne = "First Line: " + newCoinsSplit.toString();
+                resultTwo = "Second Line: " + allow.subtract(newCoinsSplit).setScale(2, BigDecimal.ROUND_HALF_UP).toString();
+            }
         }
+
+        // Set the text in the view
+        splitOneView.setText(resultOne);
+        splitTwoView.setText(resultTwo);
+
     }
 }

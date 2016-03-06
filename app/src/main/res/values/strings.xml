@@ -6,6 +6,8 @@
     <string name="allowlbl">Allowable</string>
     <string name="calc">Calculate</string>
     <string name="noOOP">OOP has not been reached.</string>
-    <string name="deductibleWarning">Not the best with deductibles and copays right now</string>
-    <string name="version">Version 0.05</string>
+    <string name="copayDeduc">Copay or Deductible</string>
+    <string name="oopMetPerfectly">OOP was met on line.</string>
+    <string name="version">Version 0.1</string>
+    <string name="versionNote">Really hates leaving fields blank.</string>
 </resources>
